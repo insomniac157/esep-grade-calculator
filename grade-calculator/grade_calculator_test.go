@@ -122,8 +122,34 @@ func TestComputeAverageSingle(t *testing.T) {
 	gc := NewGradeCalculator()
 
 	gc.AddGrade("assignment", 90, Assignment)
+
+	assignments := filterGrades(gc.grades, Assignment)
+
+    if got := computeAverage(assignments); got != 90 {
+        t.Errorf("Expected 90, got %d", got)
+    }
+}
+
+func TestPassFailPass(t *testing.T) {
+    gc := NewGradeCalculator()
+
+    gc.AddGrade("assignment", 80, Assignment)
+    gc.AddGrade("exam", 75, Exam)
+    gc.AddGrade("essay", 70, Essay)
+
+    if got := gc.GetPassFail(); got != "Pass" {
+        t.Errorf("Expected Pass, got %s", got)
+    }
+}
+
+func TestPassFailFail(t *testing.T) {
+    gc := NewGradeCalculator()
 	
-	if got := computeAverage(gc.assignments); got != 90 {
-		t.Errorf("Expected 90, got %d", got)
-	}
+    gc.AddGrade("assignment", 50, Assignment)
+    gc.AddGrade("exam", 40, Exam)
+    gc.AddGrade("essay", 30, Essay)
+
+    if got := gc.GetPassFail(); got != "Fail" {
+        t.Errorf("Expected Fail, got %s", got)
+    }
 }
