@@ -91,3 +91,10 @@ func filterGrades(all []Grade, t GradeType) []Grade {
 	}
 	return result
 }
+
+func (gc *GradeCalculator) GetPassFail() string {
+    if gc.calculateNumericalGrade() >= 70 {
+        return "Pass"
+    }
+    return "Fail"
+}
